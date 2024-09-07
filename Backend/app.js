@@ -32,6 +32,9 @@ app.use('/api/artist', artLoginRoute)
 const artProductsRoute = require('./api/artists/products')
 app.use('/api/artist/products', artProductsRoute)
 
+const artStoreRoute = require('./api/artists/store')
+app.use('/api/artist/store', artStoreRoute)
+
 const PORT = process.env.PORT || 8080;
 const server = http.createServer(app)
 server.listen(PORT, () => {

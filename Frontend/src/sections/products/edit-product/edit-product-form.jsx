@@ -142,7 +142,7 @@ export default function EditProductForm() {
                             <div>
                                 <Typography variant="body1">Upload Images</Typography>
                                 <Typography variant="caption" color="textSecondary">
-                                    Drag and drop or click to select files
+                                    click to select files
                                 </Typography>
                                 {images.length > 0 && (
                                     <Typography variant="body1" color="textPrimary">

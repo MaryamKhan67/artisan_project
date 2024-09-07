@@ -7,6 +7,9 @@ const artistSchema = mongoose.Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     mobile: { type: String, required: true },
+    logo: { type: String },
+    banner: { type: String },
+    description: { type: String },
 })
 
 module.exports = mongoose.model("artists", artistSchema)
