@@ -7,27 +7,27 @@ const icon = (name) => (
 const navConfig = [
   {
     title: 'dashboard',
-    path: '/dashboard',
+    path: '/artist/dashboard',
     icon: icon('ic_analytics'),
   },
   {
     title: 'products',
-    path: '/products',
+    path: '/artist/products',
     icon: icon('ic_products'),
   },
   {
     title: 'Manage Store',
-    path: '/manage-store',
+    path: '/artist/manage-store',
     icon: icon('ic_store'),
   },
   {
     title: 'Manage Orders',
-    path: '/manage-orders',
+    path: '/artist/manage-orders',
     icon: icon('ic_orders'),
   },
   {
     title: 'Messages',
-    path: '/messages',
+    path: '/artist/messages',
     icon: icon('ic_messages'),
   },
 

@@ -6,17 +6,29 @@ const bcrypt = require('bcrypt')
 const Artist = require('../../models/artists/artist');
 
 router.post('/login', async (req, res) => {
-    var artist = await Artist.findOne({ email: req.body.email });
-    if (artist) {
-        token = jwt.sign({ artistID: artist._id }, process.env.JWT_SECRET, {});
+    try {
+        const artist = await Artist.findOne({ email: req.body.email });
+        if (!artist) {
+            return res.status(404).send("Artist Not Found");
+        }
+
+        const isPasswordValid = await bcrypt.compare(req.body.password, artist.password);
+        if (!isPasswordValid) {
+            return res.status(401).send("Invalid Password");
+        }
+
+        const token = jwt.sign({ artistID: artist._id }, process.env.JWT_SECRET, {});
+
         return res.status(200).json({
-            "artistID": artist._id,
-            "token": token
-        })
-    } else {
-        return res.status(201).send("Artist Not Found")
+            artistID: artist._id,
+            token: token
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Internal Server Error");
     }
-})
+});
+
 
 router.post('/register', async (req, res) => {
     const check = await Artist.findOne({ email: req.body.email })
