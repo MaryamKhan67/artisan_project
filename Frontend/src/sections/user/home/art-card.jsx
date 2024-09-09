@@ -5,10 +5,12 @@ import Card from '@mui/material/Card';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 
+import { Link } from 'react-router-dom';
+
 // ----------------------------------------------------------------------
 
 export default function ArtCard({ art }) {
-  const { productName, images, description, artistID, price } = art;
+  const { _id, productName, images, description, artistID, price } = art;
 
   const renderTitle = (
     <Typography
@@ -80,9 +82,13 @@ export default function ArtCard({ art }) {
   return (
     <Grid xs={12} sm={6} md={3}>
       <Card sx={{ position: 'relative', pb: 2 }}>
-        {renderCover}
+        <Link to={`/view-product/${_id}`} style={{ textDecoration: 'none' }}>
+          {renderCover}
+        </Link>
         <Box sx={{ pl: 2, pr: 2 }}>
-          {renderTitle}
+          <Typography variant="h6" component={Link} to={`/view-product/${_id}`} sx={{ textDecoration: 'none', color: 'inherit' }}>
+            {renderTitle}
+          </Typography>
           {renderPrice}
           {renderArtistInfo}
           {renderDescription}

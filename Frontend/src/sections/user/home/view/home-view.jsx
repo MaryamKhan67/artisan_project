@@ -2,14 +2,13 @@
 import { useEffect, useState } from 'react';
 
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-import { useNavigate } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';
 
-import Iconify from 'src/components/iconify';
-import Logo from 'src/components/logo';
+import UserHeader from 'src/layouts/home/user-header';
+
 import ArtistCard from '../artist-card';
 import ArtCard from '../art-card';
 import ArtistSearch from '../artist-search';
@@ -23,9 +22,9 @@ export default function HomeView() {
 
   const [filteredArtists, setFilteredArtists] = useState([]);
   const [filteredArts, setFilteredArts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [selectedCategory, setSelectedCategory] = useState("Select Category");
-  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchArtists() {
@@ -38,6 +37,8 @@ export default function HomeView() {
         setFilteredArts(data.arts)
       } catch (error) {
         console.error('Error fetching artists:', error);
+      } finally {
+        setLoading(false)
       }
     }
     fetchArtists();
@@ -47,40 +48,19 @@ export default function HomeView() {
     setSelectedCategory(category)
     if (category === "Select Category") {
       setFilteredArtists(artists);
-      setFilteredArtists(arts)
+      setFilteredArts(arts)
     } else {
       setFilteredArtists(artists.filter((artist) => artist.category === category));
-      setFilteredArts(arts.filter((art) => art.artistID[0].category === category));
-    }
-  };
-
-  const userID = localStorage.getItem('userID');
-  const handleLoginLogout = () => {
-    if (userID) {
-      localStorage.removeItem('userID');
-      navigate('/logout');
-    } else {
-      navigate('/login');
+      setFilteredArts(arts.filter((art) => art.artistID.category === category));
     }
   };
 
 
   return (
     <Container >
-      <Stack direction="row" alignItems="center" justifyContent="space-between" mt={3} mb={5}>
-        <Typography variant="h4">
-          Art Gallery <Logo />
-        </Typography>
 
-        <Button
-          variant="contained"
-          color="inherit"
-          startIcon={<Iconify icon={userID ? 'eva:log-out-outline' : 'eva:log-in-outline'} />}
-          onClick={handleLoginLogout}
-        >
-          {userID ? 'Logout' : 'Login'}
-        </Button>
-      </Stack>
+      <UserHeader />
+
 
       <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
         <ArtistSearch artists={filteredArtists} />
@@ -94,21 +74,28 @@ export default function HomeView() {
       <Typography variant="h6" sx={{ marginBottom: 2 }}>
         Artists
       </Typography>
-      <Grid container spacing={3}>
-        {filteredArtists.map((artist, index) => (
-          <ArtistCard key={index} artist={artist} index={index} />
-        ))}
-      </Grid>
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <Grid container spacing={3}>
+          {filteredArtists.map((artist, index) => (
+            <ArtistCard key={index} artist={artist} index={index} />
+          ))}
+        </Grid>
+      )}
 
       <Typography variant="h6" sx={{ marginTop: 4, marginBottom: 2 }}>
         Arts
       </Typography>
-      <Grid container spacing={3}>
-        {filteredArts.map((art, index) => (
-          <ArtCard key={index} art={art} index={index} />
-        ))}
-      </Grid>
-
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <Grid container spacing={3}>
+          {filteredArts.map((art, index) => (
+            <ArtCard key={index} art={art} index={index} />
+          ))}
+        </Grid>
+      )}
 
     </Container >
   );
