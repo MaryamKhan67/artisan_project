@@ -5,7 +5,7 @@ import Iconify from 'src/components/iconify';
 
 import { useRouter } from 'src/routes/hooks';
 
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import axios from 'axios';
@@ -127,7 +127,6 @@ export default function EditProductForm() {
 
     return (
         <Container>
-            <ToastContainer position="top-center" autoClose={3000} />
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
                 <Typography variant="h4">Edit Product</Typography>
             </Stack>

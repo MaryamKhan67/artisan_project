@@ -25,7 +25,7 @@ router.post("/add-to-cart", async (req, res) => {
     }
 });
 
-router.get('/get-cart-products/:userID', async (req, res) => {
+router.get('/get-cart-items/:userID', async (req, res) => {
     try {
         const cartItems = await Cart.find({ userID: req.params.userID }).populate("productID");
 
@@ -43,7 +43,7 @@ router.get('/get-cart-products/:userID', async (req, res) => {
     }
 });
 
-router.delete('/remove-product/:userID/:productID', async (req, res) => {
+router.delete('/remove-item/:userID/:productID', async (req, res) => {
     try {
         await Cart.findOneAndDelete({ userID: req.params.userID, productID: req.params.productID });
         return res.status(200).json({ message: "Product removed from cart" });

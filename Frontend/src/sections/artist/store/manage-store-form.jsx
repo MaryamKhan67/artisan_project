@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Stack, Typography, Card, Button, Box, Avatar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 import Iconify from 'src/components/iconify';
 import { useRouter } from 'src/routes/hooks';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { LoadingButton } from '@mui/lab';
@@ -158,7 +158,6 @@ export default function ManageStoreForm() {
 
     return (
         <Container>
-            <ToastContainer position="top-center" autoClose={3000} />
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
                 <Typography variant="h4">Manage Store</Typography>
             </Stack>

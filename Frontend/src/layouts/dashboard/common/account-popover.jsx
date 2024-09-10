@@ -29,7 +29,7 @@ export default function AccountPopover() {
   const handleLogout = () => {
     localStorage.clear()
     handleClose()
-    router.push('/login')
+    router.push('/artist/login')
   }
 
   return (

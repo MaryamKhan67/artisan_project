@@ -35,6 +35,7 @@ app.use('/api/artist/products', artProductsRoute)
 const artStoreRoute = require('./api/artists/store')
 app.use('/api/artist/store', artStoreRoute)
 
+
 const userHomeRoute = require('./api/users/home')
 app.use('/api/user/home', userHomeRoute)
 
@@ -43,6 +44,15 @@ app.use('/api/user/product', userProductRoute)
 
 const userCartRoute = require('./api/users/cart')
 app.use('/api/user/cart', userCartRoute)
+
+const userWishlistRoute = require('./api/users/wishlist')
+app.use('/api/user/wishlist', userWishlistRoute)
+
+const userCheckoutRoute = require('./api/users/checkout')
+app.use('/api/user/checkout', userCheckoutRoute)
+
+const userOrdersRoute = require('./api/users/orders')
+app.use('/api/user/orders', userOrdersRoute)
 
 const PORT = process.env.PORT || 8080;
 const server = http.createServer(app)

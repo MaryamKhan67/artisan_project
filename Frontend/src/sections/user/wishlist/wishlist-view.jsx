@@ -8,7 +8,7 @@ import UserHeader from 'src/layouts/home/user-header';
 import Iconify from 'src/components/iconify';
 import axios from 'axios';
 
-export default function CartView() {
+export default function WishlistView() {
   const navigate = useNavigate();
   const userID = localStorage.getItem('userID');
   if (!userID) {
@@ -16,18 +16,16 @@ export default function CartView() {
   }
 
   const [cartProducts, setCartProducts] = useState(null);
-  const [totalAmount, setTotalAmount] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchCartProducts() {
       try {
-        const response = await axios.get(`http://localhost:8080/api/user/cart/get-cart-items/${userID}`);
+        const response = await axios.get(`http://localhost:8080/api/user/wishlist/get-wishlist-items/${userID}`);
         const { data } = response;
-        setCartProducts(data.cartItems);
-        setTotalAmount(data.totalAmount);
+        setCartProducts(data);
       } catch (error) {
-        console.error('Error fetching cart products:', error);
+        console.error('Error fetching wishlist products:', error);
       } finally {
         setLoading(false);
       }
@@ -37,21 +35,13 @@ export default function CartView() {
 
   const handleRemoveProduct = async (productID) => {
     try {
-      await axios.delete(`http://localhost:8080/api/user/cart/remove-item/${userID}/${productID}`);
-      const response = await axios.get(`http://localhost:8080/api/user/cart/get-cart-items/${userID}`);
-      const { data } = response;
-      setCartProducts(data.cartItems);
-      setTotalAmount(data.totalAmount);
-
-      toast.success("Product removed from cart");
+      await axios.delete(`http://localhost:8080/api/user/wishlist/remove-item/${userID}/${productID}`);
+      setCartProducts(cartProducts.filter(item => item.productID._id !== productID));
+      toast.success("Product removed from wishlist");
     } catch (error) {
-      console.error('Error removing product:', error);
-      toast.error("Failed to remove product");
+      console.error('Error removing item:', error);
+      toast.error("Failed to remove item");
     }
-  };
-
-  const handleCheckout = () => {
-    navigate("/checkout")
   };
 
   if (loading) {
@@ -79,13 +69,13 @@ export default function CartView() {
           height="80vh"
           textAlign="center"
         >
-          <Iconify icon="mdi:cart-off" width={100} height={100} style={{ color: '#ccc' }} />
-          <Typography variant="h4" mt={3} marginBottom={1}>Your Cart is Empty</Typography>
+          <Iconify icon="mdi:heart-broken" width={100} height={100} style={{ color: '#ccc' }} />
+          <Typography variant="h4" mt={3} marginBottom={1}>Your Wishlist is Empty</Typography>
           <Typography variant="body1" marginBottom={3}>
-            Looks like you haven’t added anything to your cart yet.
+            Looks like you haven’t added anything to your wishlist yet.
           </Typography>
           <Button variant="contained" color="primary" onClick={() => navigate('/')}>
-            Add Products to Checkout
+            Add Products to Wishlist
           </Button>
         </Box>
       </Container>
@@ -95,10 +85,9 @@ export default function CartView() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Container>
-
         <UserHeader />
 
-        <Typography variant="h4" marginBottom={3}>Your Cart</Typography>
+        <Typography variant="h4" marginBottom={3}>Your Wishlist</Typography>
 
         <Grid container spacing={3}>
           {cartProducts.map((item) => (
@@ -137,17 +126,6 @@ export default function CartView() {
 
           ))}
         </Grid>
-
-        <Typography variant="h5" marginTop={4} gutterBottom>Total Amount: ₹{totalAmount}</Typography>
-
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleCheckout}
-          style={{ marginTop: 4 }}
-        >
-          Proceed to Checkout
-        </Button>
       </Container>
     </div>
   );

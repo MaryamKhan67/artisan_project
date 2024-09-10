@@ -11,19 +11,38 @@ const UserHeader = () => {
     const userID = localStorage.getItem('userID');
     const handleLoginLogout = () => {
         if (userID) {
-            navigate('/logout');
-        } else {
-            navigate('/login');
+            localStorage.clear()
         }
+        navigate('/login');
     };
 
     return (
         <Stack direction="row" alignItems="center" justifyContent="space-between" mt={3} mb={5}>
-            <Typography variant="h4">
+            <Typography
+                variant="h2"
+                sx={{
+                    fontFamily: 'Brush Script MT, cursive',
+                    fontWeight: 'bold',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
+                }}
+            >
                 Art Gallery <Logo />
             </Typography>
 
             <Stack direction="row" spacing={2} alignItems="center">
+                {userID && (
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        startIcon={<Iconify icon="eva:heart-outline" />}
+                        onClick={() => navigate('/wishlist')}
+                    >
+                        Wishlist
+                    </Button>
+                )}
+
                 {userID && (
                     <Button
                         variant="outlined"

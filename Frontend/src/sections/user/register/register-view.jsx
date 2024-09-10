@@ -18,7 +18,7 @@ import { bgGradient } from 'src/theme/css';
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
 
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import axios from 'axios';
@@ -56,6 +56,7 @@ export default function UserRegisterView() {
   };
 
   const handleClick = async () => {
+    
     const validationErrors = validateFields();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -92,7 +93,6 @@ export default function UserRegisterView() {
 
   const renderForm = (
     <>
-      <ToastContainer position="top-center" autoClose={3000} />
       <Stack spacing={3} sx={{ mb: 3 }}>
         <TextField
           name="userName"

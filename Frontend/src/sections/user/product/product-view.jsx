@@ -11,7 +11,7 @@ import { CircularProgress } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import { useNavigate, useParams } from 'react-router-dom';
 import Iconify from 'src/components/iconify';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import IconButton from '@mui/material/IconButton';
 import UserHeader from 'src/layouts/home/user-header';
 import ArtCard from '../home/art-card';
@@ -187,23 +187,46 @@ export default function ProductView() {
   const handleCartClick = async () => {
     if (!userID) {
       navigate("/login")
-    }
+    } else {
+      try {
+        const response = await axios.post("http://localhost:8080/api/user/cart/add-to-cart", {
+          userID,
+          productID: id,
+        });
 
-    try {
-      const response = await axios.post("http://localhost:8080/api/user/cart/add-to-cart", {
-        userID,
-        productID: id,
-      });
-
-      if (response.status === 200) {
-        toast.success(response.data);
-      } else {
-        console.error("Failed to add product to cart");
-        toast.warning("Could not add product to Cart. Please try again.");
+        if (response.status === 200) {
+          toast.success(response.data);
+        } else {
+          console.error("Failed to add product to cart");
+          toast.warning("Could not add product to Cart. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error adding to cart:", error);
+        toast.error("Something went wrong. Please try again.");
       }
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-      toast.error("Something went wrong. Please try again.");
+    }
+  };
+
+  const handleWishlistClick = async () => {
+    if (!userID) {
+      navigate("/login")
+    } else {
+      try {
+        const response = await axios.post("http://localhost:8080/api/user/wishlist/add-to-wishlist", {
+          userID,
+          productID: id,
+        });
+
+        if (response.status === 200) {
+          toast.success(response.data);
+        } else {
+          console.error("Failed to add product to wishlist");
+          toast.warning("Could not add product to wishlist. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error adding to wishlist:", error);
+        toast.error("Something went wrong. Please try again.");
+      }
     }
   };
 
@@ -219,7 +242,6 @@ export default function ProductView() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Container>
-        <ToastContainer position="top-center" autoClose={3000} />
 
         <UserHeader />
 
@@ -275,7 +297,7 @@ export default function ProductView() {
                   <Button variant="contained" color="primary" onClick={handleCartClick} size="large" startIcon={<Iconify icon="eva:shopping-cart-outline" />}>
                     Add to Cart
                   </Button>
-                  <Button variant="outlined" color="secondary" size="large" startIcon={<Iconify icon="eva:heart-outline" />}>
+                  <Button variant="outlined" color="secondary" onClick={handleWishlistClick} size="large" startIcon={<Iconify icon="eva:heart-outline" />}>
                     Add to Wishlist
                   </Button>
                 </Stack>
