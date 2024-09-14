@@ -3,7 +3,7 @@ import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import DashboardLayout from 'src/layouts/dashboard';
 import OrderSuccessPage from 'src/pages/user/order_success';
-import OrdersPage from 'src/pages/user/orders';
+import { ArtistProfileView } from 'src/sections/user/store';
 
 export const IndexPage = lazy(() => import('src/pages/artist/app'));
 export const ProductsPage = lazy(() => import('src/pages/artist/products'));
@@ -21,6 +21,8 @@ export const ProductPage = lazy(() => import('src/pages/user/product'));
 export const WishlistPage = lazy(() => import('src/pages/user/wishlist'));
 export const CheckoutPage = lazy(() => import('src/pages/user/checkout'));
 export const CartPage = lazy(() => import('src/pages/user/cart'));
+export const OrdersPage = lazy(() => import('src/pages/user/orders'));
+export const OrderDetailPage = lazy(() => import('src/pages/user/order_detail'));
 
 export default function Router() {
 
@@ -84,6 +86,14 @@ export default function Router() {
     {
       path: '/orders',
       element: <OrdersPage />
+    },
+    {
+      path: '/order-detail/:id',
+      element: <OrderDetailPage />
+    },
+    {
+      path: '/artist/:artisticName',
+      element: <ArtistProfileView />
     },
     {
       path: '404',

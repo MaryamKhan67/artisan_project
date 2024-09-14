@@ -32,6 +32,10 @@ export default function OrdersView() {
     fetchOrders();
   }, [userID]);
 
+  const handleMoreDetailsClick = (orderID) => {
+    navigate(`/order-detail/${orderID}`)
+  }
+
   if (loading) {
     return (
       <Box
@@ -113,30 +117,11 @@ export default function OrdersView() {
                     ))}
                   </Box>
 
-                  {/* <Box mb={2}>
-                    <Typography variant="body2" color="textSecondary">
-                      <strong>Shipping Address:</strong>
-                    </Typography>
-                    <Typography variant="body2">
-                      {order.shippingAddress.flatNo}, {order.shippingAddress.streetAddress}
-                    </Typography>
-                    {order.shippingAddress.landmark && (
-                      <Typography variant="body2">{order.shippingAddress.landmark}</Typography>
-                    )}
-                    <Typography variant="body2">
-                      {order.shippingAddress.city}, {order.shippingAddress.state} - {order.shippingAddress.pincode}
-                    </Typography>
-                    {order.shippingAddress.deliveryNotes && (
-                      <Typography variant="body2">Notes: {order.shippingAddress.deliveryNotes}</Typography>
-                    )}
-                    <Typography variant="body2">{order.shippingAddress.mobile} | {order.shippingAddress.email}</Typography>
-                  </Box> */}
-
                   <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Typography variant="body2" color="textSecondary">
                       Order Date: {new Date(order.createdAt).toLocaleDateString()}
                     </Typography>
-                    <Button variant="text" color="primary" size="small">
+                    <Button variant="text" color="primary" size="small" onClick={() => handleMoreDetailsClick(order._id)}>
                       More Details
                     </Button>
                   </Box>

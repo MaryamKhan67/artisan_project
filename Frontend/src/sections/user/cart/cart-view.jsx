@@ -103,7 +103,7 @@ export default function CartView() {
         <Grid container spacing={3}>
           {cartProducts.map((item) => (
             <Grid item xs={12} sm={6} md={3} key={item.productID._id} sx={{ position: 'relative' }}>
-              <Card >
+              <Card>
                 <CardMedia
                   component="img"
                   height="300"
@@ -134,7 +134,6 @@ export default function CartView() {
                 <Iconify icon="mdi:close" width={20} height={20} />
               </IconButton>
             </Grid>
-
           ))}
         </Grid>
 

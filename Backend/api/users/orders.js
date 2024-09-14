@@ -17,4 +17,18 @@ router.get('/get-orders/:userID', async (req, res) => {
     }
 });
 
+router.get('/get-order-by-id/:orderID', async (req, res) => {
+    try {
+        const orderData = await Order.findById(req.params.orderID);
+        console.log(orderData)
+        if (!orderData) {
+            return res.status(404).json([]);
+        }
+
+        return res.status(200).json(orderData);
+    } catch (error) {
+        return res.status(500).json({ message: "An error occurred", error });
+    }
+});
+
 module.exports = router

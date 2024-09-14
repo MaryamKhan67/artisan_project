@@ -8,6 +8,7 @@ const firebaseApp = require("../firebase");
 const { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } = require("firebase/storage");
 const storage = getStorage(firebaseApp);
 const verifyToken = require('../middleware/verify_token');
+const Product = require("../../models/artists/product");
 
 router.post('/get', verifyToken, async (req, res) => {
     const { artistID } = req.body;
@@ -117,6 +118,16 @@ router.delete('/delete/:artistID', verifyToken, async (req, res) => {
         return res.status(500).json({ message: 'Internal Server Error' });
     }
 });
+
+router.get('/get-artist-by-username/(:artisticName)', async (req, res) => {
+    console.log(req.params.artisticName)
+    const artistData = await Artist.find({ artisticName: req.params.artisticName })
+    console.log(artistData)
+    const products = await Product.find({ artistID: artistData[0]._id })
+    console.log(artistData)
+    console.log(products)
+    res.status(200).json({ artistData, products })
+})
 
 
 module.exports = router;

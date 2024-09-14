@@ -73,7 +73,7 @@ export default function ArtCard({ art }) {
   const renderArtistInfo = (
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 1 }}>
 
-      <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+      <Typography variant="body2" sx={{ fontWeight: 'bold', textDecoration: 'none', color: 'inherit' }} component={Link} to={`/artist/${artistID.artisticName}`}>
         Artist: {artistID.artisticName}
       </Typography>
     </Box>
