@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -8,11 +9,13 @@ import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-ArtitstSearch.propTypes = {
+ArtistSearch.propTypes = {
   artists: PropTypes.array.isRequired,
 };
 
-export default function ArtitstSearch({ artists }) {
+export default function ArtistSearch({ artists }) {
+  const navigate = useNavigate(); // useNavigate hook to navigate
+
   return (
     <Autocomplete
       sx={{ width: 500 }}
@@ -31,6 +34,12 @@ export default function ArtitstSearch({ artists }) {
       options={artists}
       getOptionLabel={(artist) => artist.artisticName}
       isOptionEqualToValue={(option, value) => option.id === value.id}
+      onChange={(event, value) => {
+        console.log(value.artisticName)
+        if (value) {
+          navigate(`/view-artist/${value.artisticName}`);
+        }
+      }}
       renderInput={(params) => (
         <TextField
           {...params}

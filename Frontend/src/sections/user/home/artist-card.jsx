@@ -87,7 +87,7 @@ export default function ArtistCard({ artist }) {
   return (
     <Grid xs={12} sm={6} md={3}>
       <Card sx={{ position: 'relative', pb: 2 }}>
-        <Link to={`/artist/${artisticName}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+        <Link to={`/view-artist/${artisticName}`} style={{ textDecoration: 'none', color: 'inherit' }}>
           {renderCover}
           {renderAvatar}
           <Box sx={{ pl: 2, pr: 2 }}>

@@ -35,6 +35,9 @@ app.use('/api/artist/products', artProductsRoute)
 const artStoreRoute = require('./api/artists/store')
 app.use('/api/artist/store', artStoreRoute)
 
+const artOrderRoute = require('./api/artists/orders')
+app.use('/api/artist/orders', artOrderRoute)
+
 
 const userHomeRoute = require('./api/users/home')
 app.use('/api/user/home', userHomeRoute)

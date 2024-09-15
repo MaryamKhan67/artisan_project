@@ -103,7 +103,7 @@ export default function EditProductForm() {
 
             console.log('Product updated successfully:', response.data);
 
-            router.push('/artist/products');
+            router.push('/artist/arts');
         } catch (error) {
             if (error.response) {
                 if (error.response.status === 401) {

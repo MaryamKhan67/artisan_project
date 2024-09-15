@@ -98,7 +98,7 @@ export default function ArtistProfileView() {
                     <CardMedia
                       component="img"
                       height="200"
-                      image={product.images[0] || '/default-product-image.jpg'}
+                      image={product.images[0] || '/favicon/favicon.png'}
                       alt={product.productName}
                     />
                     <CardContent>
@@ -110,7 +110,7 @@ export default function ArtistProfileView() {
               </Grid>
             ))
           ) : (
-            <Typography variant="body1" color="textSecondary">No products available for this artist.</Typography>
+            <Typography variant="body1" color="textSecondary" mt={3} ml={3}>No products available for this artist.</Typography>
           )}
         </Grid>
       </Container>

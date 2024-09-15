@@ -23,6 +23,11 @@ const orderSchema = mongoose.Schema({
                 type: String,
                 required: true
             }],
+            artistID: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'artists',
+                required: true,
+            },
             price: {
                 type: Number,
                 required: true,

@@ -11,8 +11,8 @@ const navConfig = [
     icon: icon('ic_analytics'),
   },
   {
-    title: 'products',
-    path: '/artist/products',
+    title: 'Arts',
+    path: '/artist/arts',
     icon: icon('ic_products'),
   },
   {

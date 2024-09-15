@@ -100,7 +100,7 @@ export default function OrdersView() {
                         <CardMedia
                           component="img"
                           height="50"
-                          image={p.images[0] || '/default-product-image.jpg'}
+                          image={p.images[0] || '/favicon/favicon.png'}
                           alt={p.productName}
                           sx={{ borderRadius: '50%', width: 80, height: 80, mr: 2 }}
 

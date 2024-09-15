@@ -6,7 +6,7 @@ export default function ProductsPage() {
   return (
     <>
       <Helmet>
-        <title> Products | Art Gallery </title>
+        <title> Arts | Art Gallery </title>
       </Helmet>
 
       <ProductView />

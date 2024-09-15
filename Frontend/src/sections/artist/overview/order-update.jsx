@@ -13,18 +13,20 @@ import { fToNow } from 'src/utils/format-time';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
-export default function AppNewsUpdate({ title, subheader, list, ...other }) {
+export default function OrderUpdate({ title, subheader, list, ...other }) {
+  const navigate = useNavigate()
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
 
       <Scrollbar>
         <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
-          {list.map((news) => (
-            <NewsItem key={news.id} news={news} />
+          {list.map((orders) => (
+            <OrderItem key={orders.id} orders={orders} />
           ))}
         </Stack>
       </Scrollbar>
@@ -35,6 +37,7 @@ export default function AppNewsUpdate({ title, subheader, list, ...other }) {
         <Button
           size="small"
           color="inherit"
+          onClick={() => navigate('/artist/manage-orders')}
           endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
         >
           View all
@@ -44,7 +47,7 @@ export default function AppNewsUpdate({ title, subheader, list, ...other }) {
   );
 }
 
-AppNewsUpdate.propTypes = {
+OrderUpdate.propTypes = {
   title: PropTypes.string,
   subheader: PropTypes.string,
   list: PropTypes.array.isRequired,
@@ -52,8 +55,8 @@ AppNewsUpdate.propTypes = {
 
 // ----------------------------------------------------------------------
 
-function NewsItem({ news }) {
-  const { image, title, description, postedAt } = news;
+function OrderItem({ orders }) {
+  const { image, title, description, postedAt } = orders;
 
   return (
     <Stack direction="row" alignItems="center" spacing={2}>
@@ -81,8 +84,8 @@ function NewsItem({ news }) {
   );
 }
 
-NewsItem.propTypes = {
-  news: PropTypes.shape({
+OrderItem.propTypes = {
+  orders: PropTypes.shape({
     image: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,

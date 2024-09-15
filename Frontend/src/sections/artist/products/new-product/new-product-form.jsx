@@ -76,7 +76,7 @@ export default function AddProductForm() {
 
             console.log('Product added successfully:', response.data);
 
-            router.push('/artist/products');
+            router.push('/artist/arts');
         } catch (error) {
             if (error.response) {
                 if (error.response.status === 401) {
@@ -101,7 +101,7 @@ export default function AddProductForm() {
     return (
         <Container>
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-                <Typography variant="h4">Add New Product</Typography>
+                <Typography variant="h4">Add New Art</Typography>
             </Stack>
 
             <Card sx={{ padding: 3 }}>
@@ -181,7 +181,7 @@ export default function AddProductForm() {
                             startIcon={<Iconify icon="eva:plus-fill" />}
                             loading={loading}
                         >
-                            Add New Product
+                            Add New Art
                         </LoadingButton>
                     </Box>
                 </form>

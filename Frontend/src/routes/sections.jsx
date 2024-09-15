@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import DashboardLayout from 'src/layouts/dashboard';
+import ManageOrdersPage from 'src/pages/artist/manage-orders';
 import OrderSuccessPage from 'src/pages/user/order_success';
 import { ArtistProfileView } from 'src/sections/user/store';
 
@@ -37,10 +38,11 @@ export default function Router() {
       ),
       children: [
         { path: 'artist/dashboard', element: <IndexPage /> },
-        { path: 'artist/products', element: <ProductsPage /> },
+        { path: 'artist/arts', element: <ProductsPage /> },
         { path: 'artist/add-product', element: <AddProductPage /> },
         { path: 'artist/edit-product/:id', element: <EditProductPage /> },
         { path: 'artist/manage-store', element: <ManageStorePage /> },
+        { path: 'artist/manage-orders', element: <ManageOrdersPage /> },
       ],
     },
     {
@@ -92,7 +94,7 @@ export default function Router() {
       element: <OrderDetailPage />
     },
     {
-      path: '/artist/:artisticName',
+      path: '/view-artist/:artisticName',
       element: <ArtistProfileView />
     },
     {

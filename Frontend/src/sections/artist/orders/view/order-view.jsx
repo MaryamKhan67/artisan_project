@@ -1,67 +1,62 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
-import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
-
 import TableNoData from '../table-no-data';
-import UserTableRow from '../user-table-row';
-import UserTableHead from '../user-table-head';
+import OrderTableRow from '../order-table-row';
+import UserTableHead from '../order-table-head';
 import TableEmptyRows from '../table-empty-rows';
-import UserTableToolbar from '../user-table-toolbar';
+import OrderTableToolbar from '../order-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 
 // ----------------------------------------------------------------------
 
-export default function ProductPage() {
+export default function ArtistOrderPage() {
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('name');
-  const [filterName, setFilterName] = useState('');
+  const [filterName, setFilterName] = useState();
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [products, setProducts] = useState([]);
-
-  const navigate = useNavigate();
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetchProducts();
+    fetchOrders();
   }, []);
 
-  const fetchProducts = async () => {
+  const fetchOrders = async () => {
     try {
-      const artistID = localStorage.getItem("artistID");
+      const artistID = localStorage.getItem('artistID');
       const token = localStorage.getItem('token');
 
-      const response = await axios.post('http://localhost:8080/api/artist/products', { artistID }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-      setProducts(response.data);
+      const response = await axios.post(
+        'http://localhost:8080/api/artist/orders/get-artist-orders',
+        { artistID },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setOrders(response.data);
     } catch (error) {
-      console.error('Failed to fetch products', error);
+      console.error('Failed to fetch orders', error);
     }
   };
 
-
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
-    if (id !== '') {
-      setOrder(isAsc ? 'desc' : 'asc');
-      setOrderBy(id);
-    }
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(id);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -78,74 +73,64 @@ export default function ProductPage() {
     setFilterName(event.target.value);
   };
 
+  const handleStatusUpdate = () => {
+    fetchOrders();
+  }
+
+
   const dataFiltered = applyFilter({
-    inputData: products,
+    inputData: orders,
     comparator: getComparator(order, orderBy),
     filterName,
   });
 
   const notFound = !dataFiltered.length && !!filterName;
 
-  const navigateToAddProduct = () => {
-    navigate('/artist/add-product');
-  };
-
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">Arts</Typography>
-
-        <Button variant="contained" color="inherit" onClick={navigateToAddProduct} startIcon={<Iconify icon="eva:plus-fill" />}>
-          New Art
-        </Button>
+        <Typography variant="h4">Orders</Typography>
       </Stack>
 
       <Card>
-        <UserTableToolbar
-          filterName={filterName}
-          onFilterName={handleFilterByName}
-        />
+        <OrderTableToolbar filterName={filterName} onFilterName={handleFilterByName} />
 
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
-            {products.length === 0 ? (
+            {orders.length === 0 ? (
               <Typography variant="h6" align="center" sx={{ py: 3 }}>
-                No products listed on store
+                No orders listed on store
               </Typography>
             ) : (
               <Table sx={{ minWidth: 800 }}>
                 <UserTableHead
                   order={order}
                   orderBy={orderBy}
-                  rowCount={products.length}
+                  rowCount={orders.length}
                   onRequestSort={handleSort}
                   headLabel={[
-                    { id: 'images', label: 'Images' },
+                    { id: 'orderID', label: 'ID' },
                     { id: 'productName', label: 'Product Name' },
-                    { id: 'price', label: 'Price' },
-                    { id: 'stockQuantity', label: 'Stock Quantity' },
-                    { id: '' },
+                    { id: 'customer', label: 'Customer Details' },
+                    { id: 'status', label: 'Order Status' },
+                    { id: '', label: "Actions" },
                   ]}
                 />
                 <TableBody>
                   {dataFiltered
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => (
-                      <UserTableRow
-                        key={row._id}
-                        productId={row._id}
-                        productName={row.productName}
-                        price={row.price}
-                        stockQuantity={row.stockQuantity}
-                        images={row.images}
-                        onDelete={() => fetchProducts()}
+                    .map((ord) => (
+                      <OrderTableRow
+                        key={ord._id}
+                        orderID={ord.orderID}
+                        customer={ord.shippingAddress}
+                        productName={ord.product[0].productName}
+                        status={ord.status}
+                        onStatusUpdate={() => handleStatusUpdate()}
                       />
                     ))}
 
-                  <TableEmptyRows
-                    height={77}
-                    emptyRows={emptyRows(page, rowsPerPage, products.length)}
-                  />
+                  <TableEmptyRows height={77} emptyRows={emptyRows(page, rowsPerPage, orders.length)} />
 
                   {notFound && <TableNoData query={filterName} />}
                 </TableBody>
@@ -157,7 +142,7 @@ export default function ProductPage() {
         <TablePagination
           page={page}
           component="div"
-          count={products.length}
+          count={orders.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}

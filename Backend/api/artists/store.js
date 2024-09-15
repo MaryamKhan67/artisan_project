@@ -120,12 +120,8 @@ router.delete('/delete/:artistID', verifyToken, async (req, res) => {
 });
 
 router.get('/get-artist-by-username/(:artisticName)', async (req, res) => {
-    console.log(req.params.artisticName)
     const artistData = await Artist.find({ artisticName: req.params.artisticName })
-    console.log(artistData)
     const products = await Product.find({ artistID: artistData[0]._id })
-    console.log(artistData)
-    console.log(products)
     res.status(200).json({ artistData, products })
 })
 

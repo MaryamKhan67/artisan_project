@@ -54,6 +54,7 @@ router.post('/place-order', async (req, res) => {
                         {
                             productID: item.productID._id,
                             productName: item.productID.productName,
+                            artistID: item.productID.artistID,
                             images: item.productID.images,
                             price: item.productID.price,
                         },
