@@ -13,6 +13,10 @@ export default function AppView() {
   const [totalRevenue, setTotalRevenue] = useState();
   const [totalOrders, setTotalOrders] = useState();
   const [totalArts, setTotalArts] = useState();
+
+  const [totalReviews, setTotalReviews] = useState();
+  const [overallRating, setOverallRating] = useState();
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,6 +29,8 @@ export default function AppView() {
         setTotalRevenue(response.data.totalRevenue)
         setTotalOrders(response.data.totalOrders)
         setTotalArts(response.data.arts)
+        setTotalReviews(response.data.totalReviews)
+        setOverallRating(response.data.overallRating)
       } catch (error) {
         console.error('Failed to fetch recent orders:', error);
       } finally {
@@ -71,8 +77,8 @@ export default function AppView() {
 
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Rating (out of 5)"
-            total={5}
+            title={`${totalReviews} Reviews`}
+            total={overallRating}
             color="error"
             icon={<img alt="icon" src="/assets/icons/glass/star.png" />}
           />

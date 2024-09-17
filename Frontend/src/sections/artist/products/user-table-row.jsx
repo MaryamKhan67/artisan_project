@@ -89,7 +89,7 @@ export default function ProductTableRow({
         }}
       >
         <MenuItem onClick={handleCloseMenu}>
-          <Link to={`/artist/edit-product/${productId}`}>
+          <Link to={`/artist/edit-product/${productId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
             Edit
           </Link>

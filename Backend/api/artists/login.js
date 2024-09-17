@@ -21,7 +21,10 @@ router.post('/login', async (req, res) => {
 
         return res.status(200).json({
             artistID: artist._id,
-            token: token
+            token: token,
+            artistName: artist.artisticName,
+            email: artist.email,
+            category: artist.category,
         });
     } catch (error) {
         console.error(error);

@@ -7,9 +7,9 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Rating } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Iconify from 'src/components/iconify';
 import { toast } from 'react-toastify';
 import IconButton from '@mui/material/IconButton';
@@ -147,6 +147,7 @@ export default function ProductView() {
   const [product, setProduct] = useState(null);
   const [products, setProducts] = useState(null);
   const [artist, setArtist] = useState(null);
+  const [averageMetrics, setAverageMetrics] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -173,6 +174,7 @@ export default function ProductView() {
         setProduct(data.product);
         setArtist(data.product.artistID);
         setProducts(data.products)
+        setAverageMetrics(data.averageMetrics)
       } catch (error) {
         console.error('Error fetching product or artist:', error);
       } finally {
@@ -277,20 +279,23 @@ export default function ProductView() {
               <Typography variant="h5">Price: ₹{product.price}</Typography>
               <Typography variant="body1">In Stock: {product.stockQuantity}</Typography>
 
-              <Stack direction="row" spacing={2} alignItems="center" mt={4}>
-                <CardMedia
-                  component="img"
-                  image={artist.logo}
-                  alt={artist.artisticName}
-                  sx={{ width: 80, height: 80, borderRadius: '50%' }}
-                />
-                <div>
-                  <Typography variant="h6">Artist: {artist.artisticName}</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {artist.category}
-                  </Typography>
-                </div>
-              </Stack>
+
+              <Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/view-artist/${artist.artisticName}`}>
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <CardMedia
+                    component="img"
+                    image={artist.logo}
+                    alt={artist.artisticName}
+                    sx={{ width: 80, height: 80, borderRadius: '50%' }}
+                  />
+                  <div>
+                    <Typography variant="h6">Artist: {artist.artisticName}</Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {artist.category}
+                    </Typography>
+                  </div>
+                </Stack>
+              </Link>
 
               {product.stockQuantity > 0 ? (
                 <Stack direction="row" spacing={2}>
@@ -305,6 +310,60 @@ export default function ProductView() {
                 <Typography variant="h6" color="error" mt={2}>
                   Out of Stock
                 </Typography>
+              )}
+
+              {averageMetrics && (
+                <div style={{ marginBottom: '1rem' }}>
+
+                  {/* Overall Rating */}
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <Rating
+                      name="overall-rating"
+                      value={averageMetrics.overallRating}
+                      precision={0.1}
+                      readOnly
+                      size='large'
+                    />
+                    <Typography style={{ marginLeft: '0.5rem' }}>{averageMetrics.overallRating.toFixed(1)}</Typography>
+                  </div>
+
+                  {/* Art Quality Rating */}
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <Typography component="legend" style={{ marginRight: '0.5rem' }}>Art Quality:</Typography>
+                    <Rating
+                      name="art-quality-rating"
+                      value={averageMetrics.artQuality}
+                      precision={0.1}
+                      readOnly
+                    />
+                    <Typography style={{ marginLeft: '0.5rem' }}>{averageMetrics.artQuality.toFixed(1)}</Typography>
+                  </div>
+
+                  {/* Creativity Rating */}
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <Typography component="legend" style={{ marginRight: '0.5rem' }}>Creativity:</Typography>
+                    <Rating
+                      name="creativity-rating"
+                      value={averageMetrics.creativity}
+                      precision={0.1}
+                      readOnly
+                    />
+                    <Typography style={{ marginLeft: '0.5rem' }}>{averageMetrics.creativity.toFixed(1)}</Typography>
+                  </div>
+
+                  {/* Communication Rating */}
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Typography component="legend" style={{ marginRight: '0.5rem' }}>Communication:</Typography>
+                    <Rating
+                      name="communication-rating"
+                      value={averageMetrics.communication}
+                      precision={0.1}
+                      readOnly
+                    />
+                    <Typography style={{ marginLeft: '0.5rem' }}>{averageMetrics.communication.toFixed(1)}</Typography>
+                  </div>
+                </div>
+
               )}
             </Stack>
           </Grid>

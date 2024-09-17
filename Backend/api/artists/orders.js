@@ -3,6 +3,7 @@ const router = express.Router()
 
 const Order = require('../../models/users/order');
 const Product = require("../../models/artists/product");
+const Rating = require("../../models/artists/ratings");
 
 router.post("/get-artist-orders", async (req, res) => {
     const { artistID } = req.body;
@@ -33,11 +34,22 @@ router.post("/get-recent-orders", async (req, res) => {
             }, 0);
         }, 0);
 
+        const ratings = await Rating.find({ artistID });
+        let totalOverallRating = 0;
+        ratings.forEach(rating => {
+            totalOverallRating += rating.overallRating;
+        });
+        const overallRating = parseFloat(totalOverallRating / ratings.length).toFixed(1);
+
         const arts = await Product.find({ artistID }).countDocuments()
 
         const recentOrders = allRecentOrders.slice(0, 3);
 
-        return res.status(200).json({ recentOrders, totalRevenue, totalOrders: allRecentOrders.length, arts });
+        return res.status(200).json({
+            recentOrders, totalRevenue, totalOrders: allRecentOrders.length, arts,
+            totalReviews: ratings.length,
+            overallRating
+        });
     } catch (error) {
         console.error('Error fetching recent orders:', error);
         return res.status(500).json({ message: "Error fetching recent orders", error });

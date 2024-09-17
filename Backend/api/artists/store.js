@@ -1,14 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const Artist = require('../../models/artists/artist');
-
 const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 const firebaseApp = require("../firebase");
 const { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } = require("firebase/storage");
 const storage = getStorage(firebaseApp);
 const verifyToken = require('../middleware/verify_token');
+
 const Product = require("../../models/artists/product");
+const Artist = require('../../models/artists/artist');
+const Rating = require('../../models/artists/ratings');
 
 router.post('/get', verifyToken, async (req, res) => {
     const { artistID } = req.body;
@@ -120,9 +121,11 @@ router.delete('/delete/:artistID', verifyToken, async (req, res) => {
 });
 
 router.get('/get-artist-by-username/(:artisticName)', async (req, res) => {
-    const artistData = await Artist.find({ artisticName: req.params.artisticName })
-    const products = await Product.find({ artistID: artistData[0]._id })
-    res.status(200).json({ artistData, products })
+    const artistData = await Artist.findOne({ artisticName: req.params.artisticName })
+    const products = await Product.find({ artistID: artistData._id })
+    const reviews = await Rating.find({ artistID: artistData._id });
+
+    res.status(200).json({ artistData, products, reviews })
 })
 
 

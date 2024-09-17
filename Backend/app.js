@@ -57,6 +57,9 @@ app.use('/api/user/checkout', userCheckoutRoute)
 const userOrdersRoute = require('./api/users/orders')
 app.use('/api/user/orders', userOrdersRoute)
 
+const userRatingRoute = require('./api/users/ratings')
+app.use('/api/user/ratings', userRatingRoute)
+
 const PORT = process.env.PORT || 8080;
 const server = http.createServer(app)
 server.listen(PORT, () => {

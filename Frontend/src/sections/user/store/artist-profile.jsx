@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Typography, Container, Grid, Card, CardContent, CardMedia, Box, Button, CircularProgress } from '@mui/material';
+import { Typography, Container, Grid, Card, CardContent, CardMedia, Box, Button, CircularProgress, Rating } from '@mui/material'; // Import Rating component
 import axios from 'axios';
 import UserHeader from 'src/layouts/home/user-header';
 import Iconify from 'src/components/iconify';
@@ -11,17 +11,17 @@ export default function ArtistProfileView() {
 
   const [artist, setArtist] = useState(null);
   const [products, setProducts] = useState([]);
+  const [reviews, setReviews] = useState([]);  // State for reviews
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchArtistAndProducts() {
       try {
-        console.log(artisticName)
-        // Fetch the artist's details
         const artistResponse = await axios.get(`http://localhost:8080/api/artist/store/get-artist-by-username/${artisticName}`);
-        console.log(artistResponse)
-        setArtist(artistResponse.data.artistData[0]);
+        console.log(artistResponse);
+        setArtist(artistResponse.data.artistData);
         setProducts(artistResponse.data.products);
+        setReviews(artistResponse.data.reviews);  // Set reviews data
       } catch (error) {
         console.error('Error fetching artist or products:', error);
       } finally {
@@ -52,6 +52,11 @@ export default function ArtistProfileView() {
     );
   }
 
+  // Calculate average rating
+  const averageRating = reviews.length > 0
+    ? (reviews.reduce((sum, review) => sum + review.overallRating, 0) / reviews.length).toFixed(1)
+    : null;
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Container>
@@ -79,8 +84,24 @@ export default function ArtistProfileView() {
                 <Typography variant="h5" mt={1}>{artist.artisticName}</Typography>
                 <Typography variant="body1" color="textSecondary">{artist.category}</Typography>
                 <Typography variant="body2" mt={1}>{artist.description || 'No description available.'}</Typography>
-                <Button variant="contained" color="primary" sx={{ mt: 2 }} startIcon={<Iconify icon="mdi:message" />}
-                  onClick={() => navigate(`/message/${artisticName}`)}>
+
+                {averageRating ? (
+                  <Box mt={1} display="flex" alignItems="center">
+                    <Rating value={Number(averageRating)} readOnly precision={0.1} />
+                    <Typography variant="body2" ml={1}>({averageRating})</Typography>
+                    <Typography variant="caption" ml={1}>Based on {reviews.length} reviews</Typography>
+                  </Box>
+                ) : (
+                  <Typography variant="body2" mt={2}>No ratings available</Typography>
+                )}
+
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ mt: 2 }}
+                  startIcon={<Iconify icon="mdi:message" />}
+                  onClick={() => navigate(`/message/${artisticName}`)}
+                >
                   Message
                 </Button>
               </Grid>
@@ -93,7 +114,7 @@ export default function ArtistProfileView() {
           {products.length > 0 ? (
             products.map((product) => (
               <Grid item xs={12} sm={3} md={3} key={product._id}>
-                <Link to={`/view-product/${product._id}`} style={{ textDecoration: 'none', color: 'inherit' }} >
+                <Link to={`/view-product/${product._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <Card sx={{ boxShadow: 2 }}>
                     <CardMedia
                       component="img"
@@ -114,6 +135,6 @@ export default function ArtistProfileView() {
           )}
         </Grid>
       </Container>
-    </div >
+    </div>
   );
 }

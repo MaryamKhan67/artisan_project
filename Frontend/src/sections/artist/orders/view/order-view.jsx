@@ -99,7 +99,7 @@ export default function ArtistOrderPage() {
           <TableContainer sx={{ overflow: 'unset' }}>
             {orders.length === 0 ? (
               <Typography variant="h6" align="center" sx={{ py: 3 }}>
-                No orders listed on store
+                No orders
               </Typography>
             ) : (
               <Table sx={{ minWidth: 800 }}>

@@ -45,6 +45,9 @@ export default function LoginView() {
       if (response.status === 200) {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('artistID', response.data.artistID);
+        localStorage.setItem('artistName', response.data.artistName);
+        localStorage.setItem('email', response.data.email);
+        localStorage.setItem('category', response.data.category);
         router.push('/artist/dashboard');
       } else {
         toast.warning(response.data);
