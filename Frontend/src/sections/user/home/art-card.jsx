@@ -17,9 +17,13 @@ export default function ArtCard({ art }) {
       color="inherit"
       variant="subtitle1"
       align="center"
+
       sx={{
         mt: 2,
         typography: 'h6',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
       }}
     >
       {productName}

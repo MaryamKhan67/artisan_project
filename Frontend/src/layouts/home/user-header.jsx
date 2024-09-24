@@ -36,6 +36,17 @@ const UserHeader = () => {
                     <Button
                         variant="outlined"
                         color="primary"
+                        startIcon={<Iconify icon="mdi:message" />}
+                        onClick={() => navigate('/messages')}
+                    >
+                        Messages
+                    </Button>
+                )}
+
+                {userID && (
+                    <Button
+                        variant="outlined"
+                        color="primary"
                         startIcon={<Iconify icon="eva:heart-outline" />}
                         onClick={() => navigate('/wishlist')}
                     >

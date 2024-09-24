@@ -9,7 +9,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
-import { account } from 'src/_mock/account';
 import { useRouter } from 'src/routes/hooks';
 
 // ----------------------------------------------------------------------
@@ -47,15 +46,15 @@ export default function AccountPopover() {
         }}
       >
         <Avatar
-          src={account.photoURL}
-          alt={account.displayName}
+          src="/assets/images/avatars/avatar_25.jpg"
+          alt={localStorage.getItem("artistName")}
           sx={{
             width: 36,
             height: 36,
             border: (theme) => `solid 2px ${theme.palette.background.default}`,
           }}
         >
-          {account.displayName.charAt(0).toUpperCase()}
+          {localStorage.getItem("artistName")}
         </Avatar>
       </IconButton>
 

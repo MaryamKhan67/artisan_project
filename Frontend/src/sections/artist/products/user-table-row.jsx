@@ -58,7 +58,7 @@ export default function ProductTableRow({
         <TableCell component="th" scope="row" padding="none">
           <Stack alignItems="start" marginLeft={2} spacing={2}>
             <img
-              src={images[0] || '/static/placeholder.png'}
+              src={images[0] || '/favicon/favicon.png'}
               alt={productName}
               style={{ width: 40, height: 40, borderRadius: 4 }}
             />

@@ -13,6 +13,7 @@ export const AddProductPage = lazy(() => import('src/pages/artist/add-product'))
 export const EditProductPage = lazy(() => import('src/pages/artist/edit-product'));
 export const ArtistLoginPage = lazy(() => import('src/pages/artist/login'));
 export const ArtistRegisterPage = lazy(() => import('src/pages/artist/register'));
+export const ArtistMessagePage = lazy(() => import('src/pages/artist/messages'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 export const UserLoginPage = lazy(() => import('src/pages/user/login'));
@@ -24,6 +25,7 @@ export const CheckoutPage = lazy(() => import('src/pages/user/checkout'));
 export const CartPage = lazy(() => import('src/pages/user/cart'));
 export const OrdersPage = lazy(() => import('src/pages/user/orders'));
 export const OrderDetailPage = lazy(() => import('src/pages/user/order_detail'));
+export const UserMessagePage = lazy(() => import('src/pages/user/message'));
 
 export default function Router() {
 
@@ -43,6 +45,7 @@ export default function Router() {
         { path: 'artist/edit-product/:id', element: <EditProductPage /> },
         { path: 'artist/manage-store', element: <ManageStorePage /> },
         { path: 'artist/manage-orders', element: <ManageOrdersPage /> },
+        { path: 'artist/messages', element: <ArtistMessagePage /> },
       ],
     },
     {
@@ -96,6 +99,10 @@ export default function Router() {
     {
       path: '/view-artist/:artisticName',
       element: <ArtistProfileView />
+    },
+    {
+      path: '/messages',
+      element: <UserMessagePage />
     },
     {
       path: '404',

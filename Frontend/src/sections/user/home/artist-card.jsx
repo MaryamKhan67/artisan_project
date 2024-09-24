@@ -15,7 +15,7 @@ export default function ArtistCard({ artist }) {
   const renderAvatar = (
     <Avatar
       alt={artisticName}
-      src={logo}
+      src={logo || '/favicon/favicon.png'}
       sx={{
         width: 100,
         height: 100,
@@ -65,7 +65,7 @@ export default function ArtistCard({ artist }) {
         WebkitBoxOrient: 'vertical',
       }}
     >
-      {description}
+      {description || "No Description Available"}
     </Typography>
   );
 

@@ -4,6 +4,7 @@ import { Typography, Container, Grid, Card, CardContent, CardMedia, Box, Button,
 import axios from 'axios';
 import UserHeader from 'src/layouts/home/user-header';
 import Iconify from 'src/components/iconify';
+import { LoadingButton } from '@mui/lab';
 
 export default function ArtistProfileView() {
   const { artisticName } = useParams();
@@ -13,6 +14,7 @@ export default function ArtistProfileView() {
   const [products, setProducts] = useState([]);
   const [reviews, setReviews] = useState([]);  // State for reviews
   const [loading, setLoading] = useState(true);
+  const [startingConvo, setStartingConvo] = useState(false);
 
   useEffect(() => {
     async function fetchArtistAndProducts() {
@@ -30,6 +32,37 @@ export default function ArtistProfileView() {
     }
     fetchArtistAndProducts();
   }, [artisticName]);
+
+  const handleStartConversation = (artistID) => {
+    setStartingConvo(true)
+    try {
+      const userID = localStorage.getItem("userID")
+      axios.get(`http://localhost:8080/api/artist/messages/${userID}/${artistID}`)
+        .then(response => {
+          if (response.data.messages.length === 0) {
+            axios.post(`http://localhost:8080/api/artist/messages/send-message`, {
+              userID,
+              artistID,
+              message: 'Hello!',
+              sender: userID
+            }).then(() => {
+              navigate(`/messages`);
+            }).catch(error => {
+              console.error('Error creating initial message', error);
+            });
+          } else {
+            navigate(`/messages`);
+          }
+        }).catch(error => {
+          console.error('Error checking conversation', error);
+        });
+    } catch (e) {
+      console.log(e)
+    } finally {
+      setStartingConvo(false)
+    }
+  };
+
 
   if (loading) {
     return (
@@ -67,7 +100,7 @@ export default function ArtistProfileView() {
           <CardMedia
             component="img"
             height="200"
-            image={artist.banner || '/default-banner.jpg'}
+            image={artist.banner || '/assets/background/overlay_3.jpg'}
             alt={`${artist.artisticName}'s Banner`}
           />
           <CardContent>
@@ -75,7 +108,7 @@ export default function ArtistProfileView() {
               <Grid item xs={12} sm={2}>
                 <CardMedia
                   component="img"
-                  image={artist.logo || '/default-logo.png'}
+                  image={artist.logo || '/favicon/favicon.png'}
                   alt={`${artist.artisticName}'s Logo`}
                   sx={{ borderRadius: '50%', width: 150, height: 150, mb: 2 }}
                 />
@@ -95,15 +128,16 @@ export default function ArtistProfileView() {
                   <Typography variant="body2" mt={2}>No ratings available</Typography>
                 )}
 
-                <Button
+                <LoadingButton
                   variant="contained"
                   color="primary"
                   sx={{ mt: 2 }}
+                  loading={startingConvo}
                   startIcon={<Iconify icon="mdi:message" />}
-                  onClick={() => navigate(`/message/${artisticName}`)}
+                  onClick={() => handleStartConversation(artist._id)}
                 >
                   Message
-                </Button>
+                </LoadingButton>
               </Grid>
             </Grid>
           </CardContent>

@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-import { CircularProgress, Rating } from '@mui/material';
+import { Box, CircularProgress, Rating } from '@mui/material';
 import CardMedia from '@mui/material/CardMedia';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Iconify from 'src/components/iconify';
@@ -234,7 +234,16 @@ export default function ProductView() {
 
 
   if (loading) {
-    return <CircularProgress />;
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (!product || !artist) {
@@ -284,7 +293,7 @@ export default function ProductView() {
                 <Stack direction="row" spacing={2} alignItems="center">
                   <CardMedia
                     component="img"
-                    image={artist.logo}
+                    image={artist.logo || "/favicon/favicon.png"}
                     alt={artist.artisticName}
                     sx={{ width: 80, height: 80, borderRadius: '50%' }}
                   />
