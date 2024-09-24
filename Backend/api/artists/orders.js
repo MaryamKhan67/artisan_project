@@ -60,8 +60,6 @@ router.post("/get-recent-orders", async (req, res) => {
 router.post('/update-status', async (req, res) => {
     const { orderID, status } = req.body;
 
-    console.log(orderID)
-
     try {
         const order = await Order.findOne({ orderID });
 

@@ -11,6 +11,7 @@ import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
+import { CircularProgress } from '@mui/material';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -31,6 +32,7 @@ export default function ProductPage() {
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -39,6 +41,7 @@ export default function ProductPage() {
   }, []);
 
   const fetchProducts = async () => {
+    setLoading(true);
     try {
       const artistID = localStorage.getItem("artistID");
       const token = localStorage.getItem('token');
@@ -52,7 +55,10 @@ export default function ProductPage() {
       setProducts(response.data);
     } catch (error) {
       console.error('Failed to fetch products', error);
+    } finally {
+      setLoading(false);
     }
+
   };
 
 
@@ -108,11 +114,19 @@ export default function ProductPage() {
 
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
-            {products.length === 0 ? (
+            {loading && ( // Display loading spinner if loading is true
+              <Stack direction="row" justifyContent="center" sx={{ py: 3 }}>
+                <CircularProgress />
+              </Stack>
+            )}
+
+            {!loading && products.length === 0 && ( // Display message when there are no products and not loading
               <Typography variant="h6" align="center" sx={{ py: 3 }}>
                 No products listed on store
               </Typography>
-            ) : (
+            )}
+
+            {!loading && products.length > 0 && ( // Display table when there are products and not loading
               <Table sx={{ minWidth: 800 }}>
                 <UserTableHead
                   order={order}
@@ -128,24 +142,19 @@ export default function ProductPage() {
                   ]}
                 />
                 <TableBody>
-                  {dataFiltered
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => (
-                      <UserTableRow
-                        key={row._id}
-                        productId={row._id}
-                        productName={row.productName}
-                        price={row.price}
-                        stockQuantity={row.stockQuantity}
-                        images={row.images}
-                        onDelete={() => fetchProducts()}
-                      />
-                    ))}
+                  {dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                    <UserTableRow
+                      key={row._id}
+                      productId={row._id}
+                      productName={row.productName}
+                      price={row.price}
+                      stockQuantity={row.stockQuantity}
+                      images={row.images}
+                      onDelete={() => fetchProducts()}
+                    />
+                  ))}
 
-                  <TableEmptyRows
-                    height={77}
-                    emptyRows={emptyRows(page, rowsPerPage, products.length)}
-                  />
+                  <TableEmptyRows height={77} emptyRows={emptyRows(page, rowsPerPage, products.length)} />
 
                   {notFound && <TableNoData query={filterName} />}
                 </TableBody>

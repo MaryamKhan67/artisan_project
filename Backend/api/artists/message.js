@@ -12,8 +12,6 @@ router.get('/artists/:userID', async (req, res) => {
 
     const artists = await Artist.find({ _id: { $in: distinctArtistIDs } });
 
-    console.log(artists)
-
     res.json({ artists });
 });
 
@@ -23,8 +21,6 @@ router.get('/users/:artistID', async (req, res) => {
     const distinctUserIDs = await Message.find({ artistID }).distinct('userID');
 
     const users = await User.find({ _id: { $in: distinctUserIDs } });
-
-    console.log(users)
 
     res.json({ users });
 });

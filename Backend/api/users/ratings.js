@@ -9,7 +9,6 @@ router.post("/submit-rating", async (req, res) => {
     try {
         // Check if a rating from the user for the artist already exists
         const existingRating = await Rating.findOne({ userID, artistID, orderID });
-        console.log(overallRating)
 
         if (existingRating) {
             // Update the existing rating

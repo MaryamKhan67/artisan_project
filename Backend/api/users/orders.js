@@ -20,7 +20,6 @@ router.get('/get-orders/:userID', async (req, res) => {
 router.get('/get-order-by-id/:orderID', async (req, res) => {
     try {
         const orderData = await Order.findById(req.params.orderID);
-        console.log(orderData)
         if (!orderData) {
             return res.status(404).json([]);
         }
