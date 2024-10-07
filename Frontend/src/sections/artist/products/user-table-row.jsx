@@ -37,7 +37,7 @@ export default function ProductTableRow({
   const handleDelete = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:8080/api/artist/products/delete-product', { productId }, {
+      await axios.post('http://localhost:8000/api/artist/products/delete-product', { productId }, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,

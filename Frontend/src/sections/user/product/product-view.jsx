@@ -169,7 +169,7 @@ export default function ProductView() {
   useEffect(() => {
     async function fetchProduct() {
       try {
-        const response = await fetch(`http://localhost:8080/api/user/product/get-product-by-id/${id}`);
+        const response = await fetch(`http://localhost:8000/api/user/product/get-product-by-id/${id}`);
         const data = await response.json();
         setProduct(data.product);
         setArtist(data.product.artistID);
@@ -191,7 +191,7 @@ export default function ProductView() {
       navigate("/login")
     } else {
       try {
-        const response = await axios.post("http://localhost:8080/api/user/cart/add-to-cart", {
+        const response = await axios.post("http://localhost:8000/api/user/cart/add-to-cart", {
           userID,
           productID: id,
         });
@@ -214,7 +214,7 @@ export default function ProductView() {
       navigate("/login")
     } else {
       try {
-        const response = await axios.post("http://localhost:8080/api/user/wishlist/add-to-wishlist", {
+        const response = await axios.post("http://localhost:8000/api/user/wishlist/add-to-wishlist", {
           userID,
           productID: id,
         });

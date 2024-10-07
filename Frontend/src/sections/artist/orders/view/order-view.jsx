@@ -38,7 +38,7 @@ export default function ArtistOrderPage() {
       const token = localStorage.getItem('token');
 
       const response = await axios.post(
-        'http://localhost:8080/api/artist/orders/get-artist-orders',
+        'http://localhost:8000/api/artist/orders/get-artist-orders',
         { artistID },
         {
           headers: {

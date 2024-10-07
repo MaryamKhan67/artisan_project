@@ -29,7 +29,7 @@ export default function HomeView() {
   useEffect(() => {
     async function fetchArtists() {
       try {
-        const response = await fetch('http://localhost:8080/api/user/home/get-data');
+        const response = await fetch('http://localhost:8000/api/user/home/get-data');
         const data = await response.json();
         setArtists(data.artists);
         setFilteredArtists(data.artists);

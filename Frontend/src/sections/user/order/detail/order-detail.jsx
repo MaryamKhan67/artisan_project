@@ -64,7 +64,7 @@ export default function OrderDetailView() {
         comment
       };
 
-      const response = await axios.post('http://localhost:8080/api/user/ratings/submit-rating', reviewData);
+      const response = await axios.post('http://localhost:8000/api/user/ratings/submit-rating', reviewData);
       toast.success(response.data.message);
     } catch (error) {
       console.error('Error submitting review:', error);
@@ -76,10 +76,10 @@ export default function OrderDetailView() {
   useEffect(() => {
     async function fetchOrderDetails() {
       try {
-        const response = await axios.get(`http://localhost:8080/api/user/orders/get-order-by-id/${id}`);
+        const response = await axios.get(`http://localhost:8000/api/user/orders/get-order-by-id/${id}`);
         setOrder(response.data);
 
-        const ratingResponse = await axios.post('http://localhost:8080/api/user/ratings/get-order-rating', {
+        const ratingResponse = await axios.post('http://localhost:8000/api/user/ratings/get-order-rating', {
           artistID: response.data.product[0].artistID,
           userID,
           orderID: response.data._id

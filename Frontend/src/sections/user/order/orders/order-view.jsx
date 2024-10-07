@@ -20,7 +20,7 @@ export default function OrdersView() {
   useEffect(() => {
     async function fetchOrders() {
       try {
-        const response = await axios.get(`http://localhost:8080/api/user/orders/get-orders/${userID}`);
+        const response = await axios.get(`http://localhost:8000/api/user/orders/get-orders/${userID}`);
         const { data } = response;
         setOrders(data);
       } catch (error) {

@@ -37,7 +37,7 @@ export default function LoginView() {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8080/api/artist/login', {
+      const response = await axios.post('http://localhost:8000/api/artist/login', {
         email,
         password,
       });

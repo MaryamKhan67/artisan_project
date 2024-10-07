@@ -73,7 +73,7 @@ export default function ArtistCard({ artist }) {
     <Box
       component="img"
       alt={artisticName}
-      src={banner}
+      src={banner || '/assets/background/overlay_4.jpg'}
       sx={{
         top: 0,
         width: 1,

@@ -29,7 +29,7 @@ export default function EditProductForm() {
         const fetchProductDetails = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`http://localhost:8080/api/artist/products/get-by-id/${id}`, {
+                const response = await axios.get(`http://localhost:8000/api/artist/products/get-by-id/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },
@@ -94,7 +94,7 @@ export default function EditProductForm() {
             }
 
             const token = localStorage.getItem('token');
-            const response = await axios.post(`http://localhost:8080/api/artist/products/edit-product/${id}`, formData, {
+            const response = await axios.post(`http://localhost:8000/api/artist/products/edit-product/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`,

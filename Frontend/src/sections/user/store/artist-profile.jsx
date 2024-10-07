@@ -19,7 +19,7 @@ export default function ArtistProfileView() {
   useEffect(() => {
     async function fetchArtistAndProducts() {
       try {
-        const artistResponse = await axios.get(`http://localhost:8080/api/artist/store/get-artist-by-username/${artisticName}`);
+        const artistResponse = await axios.get(`http://localhost:8000/api/artist/store/get-artist-by-username/${artisticName}`);
         console.log(artistResponse);
         setArtist(artistResponse.data.artistData);
         setProducts(artistResponse.data.products);
@@ -37,10 +37,10 @@ export default function ArtistProfileView() {
     setStartingConvo(true)
     try {
       const userID = localStorage.getItem("userID")
-      axios.get(`http://localhost:8080/api/artist/messages/${userID}/${artistID}`)
+      axios.get(`http://localhost:8000/api/artist/messages/${userID}/${artistID}`)
         .then(response => {
           if (response.data.messages.length === 0) {
-            axios.post(`http://localhost:8080/api/artist/messages/send-message`, {
+            axios.post(`http://localhost:8000/api/artist/messages/send-message`, {
               userID,
               artistID,
               message: 'Hello!',

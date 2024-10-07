@@ -44,7 +44,7 @@ export default function RegisterView() {
     const checkArtisticNameUnique = async () => {
       if (artisticName.trim() !== '') {
         try {
-          const response = await axios.post('http://localhost:8080/api/artist/check-artistic-name', { artisticName });
+          const response = await axios.post('http://localhost:8000/api/artist/check-artistic-name', { artisticName });
           if (response.data.exists) {
             setErrors((prevErrors) => ({
               ...prevErrors,
@@ -100,7 +100,7 @@ export default function RegisterView() {
     setErrors({});
 
     try {
-      const response = await axios.post('http://localhost:8080/api/artist/register', {
+      const response = await axios.post('http://localhost:8000/api/artist/register', {
         legalName,
         artisticName,
         email,

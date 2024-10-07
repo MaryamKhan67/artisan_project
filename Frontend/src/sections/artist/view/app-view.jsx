@@ -23,7 +23,7 @@ export default function AppView() {
     const fetchRecentOrders = async () => {
       try {
         const artistID = localStorage.getItem("artistID")
-        const response = await axios.post('http://localhost:8080/api/artist/orders/get-recent-orders', { artistID });
+        const response = await axios.post('http://localhost:8000/api/artist/orders/get-recent-orders', { artistID });
         console.log(response.data)
         setRecentOrders(response.data.recentOrders);
         setTotalRevenue(response.data.totalRevenue)

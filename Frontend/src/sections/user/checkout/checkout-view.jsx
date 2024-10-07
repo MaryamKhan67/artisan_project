@@ -41,7 +41,7 @@ export default function CheckoutView() {
 
     async function fetchCartProducts() {
       try {
-        const response = await axios.get(`http://localhost:8080/api/user/cart/get-cart-items/${userID}`);
+        const response = await axios.get(`http://localhost:8000/api/user/cart/get-cart-items/${userID}`);
         const { data } = response;
         setCartProducts(data.cartItems);
         setTotalAmount(data.totalAmount);
@@ -54,7 +54,7 @@ export default function CheckoutView() {
 
     async function getUserDetails() {
       try {
-        const response = await axios.get(`http://localhost:8080/api/user/home/get-user/${userID}`);
+        const response = await axios.get(`http://localhost:8000/api/user/home/get-user/${userID}`);
         const { data } = response;
         setFormData({
           ...formData,
@@ -104,7 +104,7 @@ export default function CheckoutView() {
     }
 
     try {
-      const response = await axios.post('http://localhost:8080/api/user/checkout/create-order', {
+      const response = await axios.post('http://localhost:8000/api/user/checkout/create-order', {
         amount: totalAmount,
         currency: 'INR'
       });
@@ -122,7 +122,7 @@ export default function CheckoutView() {
         async handler(resp) {
           const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = resp;
           try {
-            await axios.post('http://localhost:8080/api/user/checkout/place-order', {
+            await axios.post('http://localhost:8000/api/user/checkout/place-order', {
               userID,
               name: formData.name,
               email: formData.email,

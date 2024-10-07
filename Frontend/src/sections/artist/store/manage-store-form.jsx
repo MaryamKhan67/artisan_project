@@ -29,7 +29,7 @@ export default function ManageStoreForm() {
             const artistID = localStorage.getItem("artistID");
             const token = localStorage.getItem('token');
 
-            const response = await axios.post('http://localhost:8080/api/artist/store/get', { artistID }, {
+            const response = await axios.post('http://localhost:8000/api/artist/store/get', { artistID }, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
@@ -56,7 +56,7 @@ export default function ManageStoreForm() {
 
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.post('http://localhost:8080/api/artist/store/edit-logo', formData, {
+                const response = await axios.post('http://localhost:8000/api/artist/store/edit-logo', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Authorization': `Bearer ${token}`,
@@ -80,7 +80,7 @@ export default function ManageStoreForm() {
 
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.post('http://localhost:8080/api/artist/store/edit-banner', formData, {
+                const response = await axios.post('http://localhost:8000/api/artist/store/edit-banner', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Authorization': `Bearer ${token}`,
@@ -110,7 +110,7 @@ export default function ManageStoreForm() {
         const token = localStorage.getItem('token');
 
         try {
-            await axios.delete(`http://localhost:8080/api/artist/store/delete/${artistID}`, {
+            await axios.delete(`http://localhost:8000/api/artist/store/delete/${artistID}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
@@ -135,7 +135,7 @@ export default function ManageStoreForm() {
 
         try {
             const token = localStorage.getItem('token');
-            await axios.post('http://localhost:8080/api/artist/store/edit-description', formData, {
+            await axios.post('http://localhost:8000/api/artist/store/edit-description', formData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,

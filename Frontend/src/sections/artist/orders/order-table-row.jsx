@@ -21,7 +21,7 @@ export default function OrderTableRow({
   const handleStatusChange = async (newStatus) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:8080/api/artist/orders/update-status', {
+      await axios.post('http://localhost:8000/api/artist/orders/update-status', {
         orderID,
         status: newStatus,
       }, {

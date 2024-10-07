@@ -46,7 +46,7 @@ export default function ProductPage() {
       const artistID = localStorage.getItem("artistID");
       const token = localStorage.getItem('token');
 
-      const response = await axios.post('http://localhost:8080/api/artist/products', { artistID }, {
+      const response = await axios.post('http://localhost:8000/api/artist/products', { artistID }, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,

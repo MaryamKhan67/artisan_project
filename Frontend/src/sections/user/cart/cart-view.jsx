@@ -22,7 +22,7 @@ export default function CartView() {
   useEffect(() => {
     async function fetchCartProducts() {
       try {
-        const response = await axios.get(`http://localhost:8080/api/user/cart/get-cart-items/${userID}`);
+        const response = await axios.get(`http://localhost:8000/api/user/cart/get-cart-items/${userID}`);
         const { data } = response;
         setCartProducts(data.cartItems);
         setTotalAmount(data.totalAmount);
@@ -37,8 +37,8 @@ export default function CartView() {
 
   const handleRemoveProduct = async (productID) => {
     try {
-      await axios.delete(`http://localhost:8080/api/user/cart/remove-item/${userID}/${productID}`);
-      const response = await axios.get(`http://localhost:8080/api/user/cart/get-cart-items/${userID}`);
+      await axios.delete(`http://localhost:8000/api/user/cart/remove-item/${userID}/${productID}`);
+      const response = await axios.get(`http://localhost:8000/api/user/cart/get-cart-items/${userID}`);
       const { data } = response;
       setCartProducts(data.cartItems);
       setTotalAmount(data.totalAmount);

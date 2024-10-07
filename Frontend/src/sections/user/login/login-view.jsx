@@ -37,7 +37,7 @@ export default function UserLoginView() {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8080/api/user/login', {
+      const response = await axios.post('http://localhost:8000/api/user/login', {
         email,
         password,
       });

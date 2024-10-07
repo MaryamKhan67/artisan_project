@@ -21,7 +21,7 @@ export default function WishlistView() {
   useEffect(() => {
     async function fetchCartProducts() {
       try {
-        const response = await axios.get(`http://localhost:8080/api/user/wishlist/get-wishlist-items/${userID}`);
+        const response = await axios.get(`http://localhost:8000/api/user/wishlist/get-wishlist-items/${userID}`);
         const { data } = response;
         setCartProducts(data);
       } catch (error) {
@@ -35,7 +35,7 @@ export default function WishlistView() {
 
   const handleRemoveProduct = async (productID) => {
     try {
-      await axios.delete(`http://localhost:8080/api/user/wishlist/remove-item/${userID}/${productID}`);
+      await axios.delete(`http://localhost:8000/api/user/wishlist/remove-item/${userID}/${productID}`);
       setCartProducts(cartProducts.filter(item => item.productID._id !== productID));
       toast.success("Product removed from wishlist");
     } catch (error) {

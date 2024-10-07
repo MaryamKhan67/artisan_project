@@ -56,7 +56,7 @@ export default function UserRegisterView() {
   };
 
   const handleClick = async () => {
-    
+
     const validationErrors = validateFields();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -67,7 +67,7 @@ export default function UserRegisterView() {
     setErrors({});
 
     try {
-      const response = await axios.post('http://localhost:8080/api/user/register', {
+      const response = await axios.post('http://localhost:8000/api/user/register', {
         userName,
         email,
         password,

@@ -30,7 +30,7 @@ export default function MessageView() {
   }, [messages]);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/artist/messages/artists/${userID}`)
+    axios.get(`http://localhost:8000/api/artist/messages/artists/${userID}`)
       .then(response => {
         setArtists(response.data.artists);
         setLoading(false);
@@ -44,7 +44,7 @@ export default function MessageView() {
 
   const fetchMessages = (artistID) => {
     setActiveArtist(artistID);
-    axios.get(`http://localhost:8080/api/artist/messages/${userID}/${artistID}`)
+    axios.get(`http://localhost:8000/api/artist/messages/${userID}/${artistID}`)
       .then(response => {
         setMessages(response.data.messages);
       })
@@ -57,7 +57,7 @@ export default function MessageView() {
   useEffect(() => {
     if (activeArtist) {
       const interval = setInterval(() => {
-        axios.get(`http://localhost:8080/api/artist/messages/${userID}/${activeArtist}`)
+        axios.get(`http://localhost:8000/api/artist/messages/${userID}/${activeArtist}`)
           .then(response => {
             setMessages(response.data.messages);
           })
@@ -74,7 +74,7 @@ export default function MessageView() {
     setSending(true)
     if (newMessage.trim() === '') return;
     try {
-      axios.post(`http://localhost:8080/api/artist/messages/send-message`, {
+      axios.post(`http://localhost:8000/api/artist/messages/send-message`, {
         userID,
         artistID: activeArtist,
         message: newMessage,
